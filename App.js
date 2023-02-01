@@ -1,46 +1,47 @@
-import React,{Component} from 'react';
-import { Button, StyleSheet, Text, View , StatusBar} from 'react-native'
 
-class App extends Component {
-  state = {
-    value : 0
-  }
-  incrementValue = () =>{
-    this.setState({
-      value : this.state.value + 1
-    })
-    
-  }
-  decrementValue = () =>{
-    this.setState({
-      value : this.state.value - 1
-      
-    })
-    
-  }
-
-
-  render(){
-    return (
-      <View style={styles.container}>
-        <Text style={{fontSize:60,marginBottom:10}}>{this.state.value}</Text>
-        <StatusBar style="auto" />
-        <View style={{flexDirection:'row'}}>
-          <Button onPress={this.decrementValue} title="Decrease" />
-          <Text>   </Text>
-          <Button onPress={this.incrementValue} title="Increase" />
-        </View>
-      </View>
-    );
-  }
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Login from './components/login';
+import Signup from './components/signup';
+import Dashboard from './components/dashboard';
+const Stack = createStackNavigator();
+function MyStack() {
+  return (
+    <Stack.Navigator
+      initialRouteName="Signup"
+      screenOptions={{
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: '#3740FE',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}>
+      <Stack.Screen 
+        name="Signup" 
+        component={Signup} 
+        options={{ title: 'Signup' }}
+      />       
+      <Stack.Screen 
+        name="Login" 
+        component={Login} 
+        options={{title: 'Login'} }
+      />
+      <Stack.Screen 
+       name="Dashboard" 
+       component={Dashboard} 
+       options={{ title: 'Dashboard' } }
+      />
+    </Stack.Navigator>
+  );
 }
-
-export default App;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-},
-});
+export default function App() {
+  return (
+    <NavigationContainer>
+      <MyStack />
+    </NavigationContainer>
+  );
+}
